@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ski Resort Visualizations</title>
+  <style>
+    :root {
+      --primary-color: #2c3e50;
+      --secondary-color: #3498db;
+      --accent-color: #e74c3c;
+      --light-color: #ecf0f1;
+      --dark-color: #2c3e50;
+      --text-color: #333;
+      --text-light: #7f8c8d;
+    }
+
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      color: var(--text-color);
+      line-height: 1.6;
+      background-color: #f5f7fa;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+    
+    header {
+      background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+      color: white;
+      padding: 2rem 0;
+      text-align: center;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2rem;
+    }
+    
+    .header-content {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    .project-title {
+      font-size: 2.5rem;
+      margin: 0 0 0.5rem;
+      font-weight: 700;
+      letter-spacing: -0.5px;
+    }
+    
+    .project-subtitle {
+      font-size: 1.1rem;
+      opacity: 0.9;
+      margin-bottom: 1.5rem;
+      font-weight: 300;
+    }
+    
+    nav {
+      display: flex;
+      justify-content: center;
+      background-color: rgba(255, 255, 255, 0.1);
+      border-radius: 50px;
+      padding: 0.5rem;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      padding: 0.5rem 1.25rem;
+      margin: 0 0.25rem;
+      border-radius: 50px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background-color: rgba(255, 255, 255, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    nav a.active-nav {
+      background-color: var(--accent-color);
+    }
+    
+    .page {
+      display: none;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .active {
+      display: block;
+    }
+    
+    .visual {
+      width: 100%;
+      max-width: 1000px;
+      height: 800px;
+      margin: 2rem auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+    .content-box {
+      background-color: white;
+      border-radius: 12px;
+      padding: 2rem;
+      margin: 2rem auto;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+      max-width: 1000px;
+    }
+    
+    .content-box h1 {
+      color: var(--primary-color);
+      margin-top: 0;
+      padding-bottom: 1rem;
+      border-bottom: 2px solid var(--light-color);
+      font-weight: 600;
+    }
+    
+    .content-box p {
+      margin-bottom: 1.5rem;
+    }
+    
+    footer {
+      background-color: var(--primary-color);
+      color: white;
+      text-align: center;
+      padding: 2rem 0;
+      margin-top: 3rem;
+    }
+    
+    @media (max-width: 768px) {
+      .project-title {
+        font-size: 2rem;
+      }
+      
+      nav {
+        flex-wrap: wrap;
+      }
+      
+      nav a {
+        padding: 0.5rem 1rem;
+        margin: 0.25rem;
+        font-size: 0.9rem;
+      }
+      
+      .visual {
+          width: 100%;
+          max-width: 1000px;
+          height: 800px;
+          margin: 2rem auto;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          background-color: white;
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+          border-radius: 12px;
+          overflow: hidden;
+        }
+  }
+    
+    .visual-top20 {
+      width: 100%;
+      max-width: 1000px;
+      height: 1000px; 
+      margin: 2rem auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    .visual-season {
+      width: 100%;
+      max-width: 1000px;
+      height: auto; 
+      margin: 2rem auto;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: white;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      overflow: hidden;
+    }
+    
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-content">
+      <h1 class="project-title">Global Ski Resort Analytics</h1>
+      <p class="project-subtitle">Explore the world's best ski destinations through data</p>
+      <nav>
+        <a onclick="showPage('overview')" class="active-nav">Overview</a>
+        <a onclick="showPage('top20')">Top 20 Resorts</a>
+        <a onclick="showPage('season')">Seasonal Resort Openings</a>
+        <a onclick="showPage('costs')">Ticket Prices</a>
+        <a onclick="showPage('elevation')">Elevation</a>
+      </nav>
+    </div>
+  </header>
+
+  <div class="container">
+    <div id="overview" class="page active">
+      <div class="content-box">
+        <h1>Project Overview</h1>
+        <p>Planning a ski or snowboard trip can be a daunting task, with hundreds of different resorts to choose from worldwide. 
+          Considering all the factors that go into making a perfect ski trip, narrowing down to just one resort can seem almost impossible.</p>
+        
+        <p>The goal of this project is to simplify the planning process by providing various visualizations that give information about different ski resorts. For most of the following visualizations, I will be breaking down the differences between continents to give a general idea of the best ski destination. After deciding which region is the best fit for you, these visualizations will also help to narrow down to the resort that best matches your needs.</p>
+        
+        <p>The following visualization is an interactive map showing approximately 500 major ski resorts analyzed in this project. Each dot represents a different resort, color coded by their continent. Hovering over a resort will show its name, country, vertical drop, and ticket price in US dollars. Vertical drop is defined as the vertical distance from the highest point on the mountain to the lowest. You can use the dropdown menu on the right to filter for any specific countries that you wish to see.</p>
+        
+        <p>Below the map are three pie charts showing the proportion of resorts with snowparks, summer skiing, and night skiing. If you wish to filter for any of these attributes, you can click on the corresponding slices of the pie charts to only see resorts that match what you select.</p>
+      </div>
+      
+      <div class="visual">
+        <div class='tableauPlaceholder' id='viz1745422901776' style='width: 100%; height: 100%; position: relative;'>
+          <noscript>
+            <a href='#'>
+              <img alt='Dashboard 1' src='https://public.tableau.com/static/images/SB/SB5D7FWJM/1_rss.png' style='border: none' />
+            </a>
+          </noscript>
+          <object class='tableauViz' style='width: 100%; height: 100%;'>
+            <param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' />
+            <param name='embed_code_version' value='3' />
+            <param name='path' value='shared&#47;SB5D7FWJM' />
+            <param name='toolbar' value='yes' />
+            <param name='static_image' value='https://public.tableau.com/static/images/SB/SB5D7FWJM/1.png' />
+            <param name='animate_transition' value='yes' />
+            <param name='display_static_image' value='yes' />
+            <param name='display_spinner' value='yes' />
+            <param name='display_overlay' value='yes' />
+            <param name='display_count' value='yes' />
+            <param name='language' value='en-US' />
+            <param name='filter' value='publish=yes' />
+          </object>
+        </div>
+        <script type='text/javascript'>
+          var divElement = document.getElementById('viz1745422901776');
+          var vizElement = divElement.getElementsByTagName('object')[0];
+          vizElement.style.width = "100%";
+          vizElement.style.height = "100%";
+      
+          var scriptElement = document.createElement('script');
+          scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';
+          vizElement.parentNode.insertBefore(scriptElement, vizElement);
+        </script>
+      </div>
+    </div>
+
+    <div id="top20" class="page">
+      <div class="content-box">
+        <h1>Top 20 Resorts by Continent</h1>
+        <p>The number of slopes at a resort can have a huge impact on the enjoyment of a ski trip. If a resort doesn't have enough varied slopes, 
+          the trip can become repetitive fast. It's essential to choose a resort with enough slopes to keep the trip fun and diverse.
+        </p>
+        <p>
+          While the total number of runs is important, it's even more vital that the slopes at a mountain match your desired skill level.
+          The visualizations below dive into the 20 resorts with the most total slopes in Europe, North America, and Asia.
+          Each resort's slopes are categorized by difficulty level: beginner (green), intermediate (blue), and advanced (dark purple).
+        </p>
+        <p>Use the tabs at the top to navigate between charts for each continent. To see more info about the exact number of each type of run,
+          hover your mouse over the desired bar.
+        </p>
+        <p>
+          As shown in the visuals, North American resorts tend to have a much higher proportion of advanced slopes compared
+          to Europe and Asia. If you're an expert skier looking formore challenging terrain, a North American resort might be the best for you.
+          Alternatively, if you're a beginner, or just looking for a more relaxed experience, the higher number of beginner and intermediate slopes in 
+          Europe and Asia may lead to a more pleasurable trip.
+        </p>
+      </div>
+      <div class="visual-top20"><div class='tableauPlaceholder' id='viz1745430989639' style='position: relative'><noscript><a href='#'><img alt='Top 20 Resorts by Continent ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Top20&#47;Story1&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='JakePell_SkiResorts_Top20&#47;Story1' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Top20&#47;Story1&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1745430989639');                    var vizElement = divElement.getElementsByTagName('object')[0];                    vizElement.style.width='1016px';vizElement.style.height='991px';                    var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script></div>
+    </div>
+
+    <div id="season" class="page">
+      <div class="content-box">
+        <h1>Seasonal Resort Openings</h1>
+        <p>Other than choosing where to go, one of the most important aspects of planning a ski trip is choosing <i>when</i> to go.
+          This heatmap shows the months with the highest number of ski resorts open in each continent. A darker blue indicates that 
+          there was more resorts open for that month. Hover your mouse over any tile to see the exact number of operating resorts for any given month and continent.<p>
+          <p>
+            For Europe, Asia, and North America, peak skiing season primarily spans from December to March. If you're looking for 
+            a trip to Oceania or South America, you'll have to make sure to plan to go trip between June and October. Interestingly, 
+            Europe has a few ski resorts that operate year-round, and aside from September, there's always at least one North American resort open.
+          </p>
+      </div>
+      <div class="visual-season">
+        <div class='tableauPlaceholder' id='viz1745435743724' style='position: relative'><noscript><a href='#'><img alt='Dashboard 3 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Heatmap&#47;Dashboard3&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='JakePell_SkiResorts_Heatmap&#47;Dashboard3' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Heatmap&#47;Dashboard3&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1745435743724');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+      </div>
+    </div>
+
+    <div id="costs" class="page">
+      <div class="content-box">
+        <h1>Ticket Prices</h1>
+        <p>The cost of lift tickets can be a huge factor in the overall affordability of a skiing trip. 
+          It's important to be able to plan how much a trip is going to cost and plan accordingly. 
+          This breakdown will help you find the best destination to maximize your budget.</p>
+        <p>
+          Each bar on the following graph represents one ski resort, with its height corresponding to the cost of a lift ticket, and the color showing its continent.
+          By looking at the graph, it's clear to see that the most expensive tickets are found in North America.
+        </p>
+        <p>
+          If you want to narrow down the resorts shown, use the checkboxes on the right to select which continents you want to see.
+          Additionally, you can use the slider to choose your desired price range, allowing you to find the exact resort that's right for you.
+        </p>
+      </div>
+      <div class="visual"><div class='tableauPlaceholder' id='viz1745437109890' style='position: relative'><noscript><a href='#'><img alt='Dashboard 4 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Prices&#47;Dashboard4&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='JakePell_SkiResorts_Prices&#47;Dashboard4' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Prices&#47;Dashboard4&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1745437109890');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script></div>
+    </div>
+  </div>
+
+  <div id="elevation" class="page">
+    <div class="content-box">
+      <h1>Elevation</h1>
+      <p>
+        Elevation can be a crucial part of planning a ski trip. Higher elevations lead to more reliable snowfall and better snow quality.
+        Keep in mind that if you're susceptible to elevation sickness, it may be better to consider a lower-elevation alternative.
+      </p>
+      <p>
+        This visual will help you determine the best place to visit, regardless of your elevation preferences. Each bar represents the average 
+        elevation of all resorts on a given continent. The top of the bar shows the average highest elevation in feet, while the bottom shows the average lowest elevation.
+        Hover over the bars to see the exact values.
+      </p>
+      <p>
+        It should also be noted that the thicker a bar is, the more vertical drop that continent has on average. 
+        North America has a higher average peak than Europe, but the mountains in Europe are typically taller from base to summit.
+      </p>
+    </div>
+    <div class="visual">
+      <div class='tableauPlaceholder' id='viz1745438614647' style='position: relative'><noscript><a href='#'><img alt='Dashboard 6 ' src='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Elevation&#47;Dashboard6&#47;1_rss.png' style='border: none' /></a></noscript><object class='tableauViz'  style='display:none;'><param name='host_url' value='https%3A%2F%2Fpublic.tableau.com%2F' /> <param name='embed_code_version' value='3' /> <param name='site_root' value='' /><param name='name' value='JakePell_SkiResorts_Elevation&#47;Dashboard6' /><param name='tabs' value='no' /><param name='toolbar' value='yes' /><param name='static_image' value='https:&#47;&#47;public.tableau.com&#47;static&#47;images&#47;Ja&#47;JakePell_SkiResorts_Elevation&#47;Dashboard6&#47;1.png' /> <param name='animate_transition' value='yes' /><param name='display_static_image' value='yes' /><param name='display_spinner' value='yes' /><param name='display_overlay' value='yes' /><param name='display_count' value='yes' /><param name='language' value='en-US' /><param name='filter' value='publish=yes' /></object></div>                <script type='text/javascript'>                    var divElement = document.getElementById('viz1745438614647');                    var vizElement = divElement.getElementsByTagName('object')[0];                    if ( divElement.offsetWidth > 800 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else if ( divElement.offsetWidth > 500 ) { vizElement.style.width='1000px';vizElement.style.height='827px';} else { vizElement.style.width='100%';vizElement.style.height='727px';}                     var scriptElement = document.createElement('script');                    scriptElement.src = 'https://public.tableau.com/javascripts/api/viz_v1.js';                    vizElement.parentNode.insertBefore(scriptElement, vizElement);                </script>
+    </div>
+  </div>
+</div>
+
+  <footer>
+    <div class="container">
+    </div>
+  </footer>
+
+  <script>
+    function showPage(pageId) {
+      document.querySelectorAll('.page').forEach(page => {
+        page.classList.remove('active');
+      });
+      
+      document.getElementById(pageId).classList.add('active');
+      
+      document.querySelectorAll('nav a').forEach(link => {
+        link.classList.remove('active-nav');
+      });
+      event.target.classList.add('active-nav');
+    }
+  </script>
+</body>
+</html>
